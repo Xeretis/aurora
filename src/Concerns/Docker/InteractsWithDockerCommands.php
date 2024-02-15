@@ -55,7 +55,7 @@ trait InteractsWithDockerCommands
         }
 
         $profile_str = '--profile ' . implode(' --profile ', $profiles);
-        $file_str = '-f "' . implode(' -f "', $files) . '"';
+        $file_str = '-f "' . implode('" -f "', $files) . '"';
 
         ConsoleLogger::log_trace('Using compose files: ' . implode(', ', $files), 'InteractsWithDockerCommands');
         ConsoleLogger::log_trace('Using profiles: ' . implode(', ', $profiles), 'InteractsWithDockerCommands');
