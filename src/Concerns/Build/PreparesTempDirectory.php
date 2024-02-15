@@ -43,7 +43,7 @@ trait PreparesTempDirectory
             ConsoleLogger::log_warning('Cleaning up temporary directory...', 'PrepareTempDirectory');
             rrmdir('"'.$this->tempPath().'"');
         }
-        mkdir($this->tempPath());
+        mkdir('"'.$this->tempPath().'"');
     }
 
     /**
