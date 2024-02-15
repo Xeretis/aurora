@@ -18,7 +18,7 @@ class GitHelper
      */
     public static function isRepo(string $repo_path): bool
     {
-        $process = Process::fromShellCommandline("git -C $repo_path rev-parse");
+        $process = Process::fromShellCommandline("git -C \"$repo_path\" rev-parse");
         return 0 === $process->run();
     }
 
@@ -29,7 +29,7 @@ class GitHelper
      */
     public static function isDirty(string $repo_path): bool
     {
-        return '' != shell_exec("git -C $repo_path status --porcelain");
+        return '' != shell_exec("git -C \"$repo_path\" status --porcelain");
     }
 
     /**
@@ -42,7 +42,7 @@ class GitHelper
         return array_map(fn($item) => rtrim($item, DIRECTORY_SEPARATOR),
             explode(
                 PHP_EOL,
-                trim(shell_exec("git -C $repo_path ls-files --exclude-standard -oi --directory"))
+                trim(shell_exec("git -C \"$repo_path\" ls-files --exclude-standard -oi --directory"))
             ));
     }
 
@@ -53,7 +53,7 @@ class GitHelper
      */
     public static function init(string $repo_path): bool
     {
-        return 0 === (int) shell_exec("git -C $repo_path init");
+        return 0 === (int) shell_exec("git -C \"$repo_path\" init");
     }
 
     /**
@@ -63,7 +63,7 @@ class GitHelper
      */
     public static function getCurrentBranch(string $repo_path): string
     {
-        return trim(shell_exec("git -C $repo_path rev-parse --abbrev-ref HEAD"));
+        return trim(shell_exec("git -C \"$repo_path\" rev-parse --abbrev-ref HEAD"));
     }
 
     /**
@@ -73,6 +73,6 @@ class GitHelper
      */
     public static function getCurrentCommitHash(string $repo_path): string
     {
-        return trim(shell_exec("git -C $repo_path rev-parse HEAD"));
+        return trim(shell_exec("git -C \"$repo_path\" rev-parse HEAD"));
     }
 }
