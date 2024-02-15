@@ -65,7 +65,7 @@ trait PreparesTempDirectory
     {
         if ($this->usePublishedAssets()) {
             ConsoleLogger::log_warning('Using published assets', 'PrepareTempDirectory');
-            rsync(base_path('docker/prod'), $this->tempPath() . '/assets');
+            rsync('"'.base_path('docker/prod').'"', $this->tempPath() . '/assets');
             return;
         }
 
@@ -81,7 +81,7 @@ trait PreparesTempDirectory
      */
     private function usePublishedAssets(): bool
     {
-        return file_exists(base_path('docker/prod'));
+        return file_exists('"'.base_path('docker/prod').'"');
     }
 
     /**
@@ -93,6 +93,6 @@ trait PreparesTempDirectory
     {
         ConsoleLogger::log_trace('Copying source code to temporary directory...', 'PrepareTempDirectory');
         mkdir($this->tempPath() . '/source');
-        rsync_repo_ignore(base_path(), $this->tempPath() . '/source');
+        rsync_repo_ignore('"'.base_path().'"', $this->tempPath() . '/source');
     }
 }
