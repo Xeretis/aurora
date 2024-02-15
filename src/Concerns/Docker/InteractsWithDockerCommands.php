@@ -26,11 +26,11 @@ trait InteractsWithDockerCommands
         $files[] = self::getCurrentComposeFile();
 
         if (file_exists(base_path('docker-compose.override.yaml'))) {
-            $files[] = '"' . base_path('docker-compose.override.yaml') . '"';
+            $files[] = '\"' . base_path('docker-compose.override.yaml') . '\"';
         }
 
         if (file_exists(base_path('docker-compose.override.yml'))) {
-            $files[] = '"' . base_path('docker-compose.override.yml') . '"';
+            $files[] = '\"' . base_path('docker-compose.override.yml') . '\"';
         }
 
         $profiles = [];
