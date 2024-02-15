@@ -53,7 +53,7 @@ trait PreparesTempDirectory
      */
     private function tempPath(): string
     {
-        return base_path(Constants::AURORA_TEMP_PATH);
+        return '"' . base_path(Constants::AURORA_TEMP_PATH) . '"';
     }
 
     /**
