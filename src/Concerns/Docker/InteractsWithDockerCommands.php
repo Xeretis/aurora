@@ -26,11 +26,11 @@ trait InteractsWithDockerCommands
         $files[] = self::getCurrentComposeFile();
 
         if (file_exists(base_path('docker-compose.override.yaml'))) {
-            $files[] = '\"' . base_path('docker-compose.override.yaml') . '\"';
+            $files[] = base_path('docker-compose.override.yaml');
         }
 
         if (file_exists(base_path('docker-compose.override.yml'))) {
-            $files[] = '\"' . base_path('docker-compose.override.yml') . '\"';
+            $files[] = base_path('docker-compose.override.yml');
         }
 
         $profiles = [];
@@ -55,7 +55,7 @@ trait InteractsWithDockerCommands
         }
 
         $profile_str = '--profile ' . implode(' --profile ', $profiles);
-        $file_str = '-f ' . implode(' -f ', $files);
+        $file_str = '-f "' . implode(' -f "', $files) . '"';
 
         ConsoleLogger::log_trace('Using compose files: ' . implode(', ', $files), 'InteractsWithDockerCommands');
         ConsoleLogger::log_trace('Using profiles: ' . implode(', ', $profiles), 'InteractsWithDockerCommands');
