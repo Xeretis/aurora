@@ -28,7 +28,7 @@ trait PreparesTempDirectory
         $this->copyAssets();
         $this->copySource();
         ConsoleLogger::log_trace('Writing current commit hash to temporary directory...', 'PrepareTempDirectory');
-        file_put_contents($this->tempPath() . '/assets/git_commit', GitHelper::getCurrentCommitHash(base_path()));
+        file_put_contents('"'.$this->tempPath() . '/assets/git_commit"', GitHelper::getCurrentCommitHash(base_path()));
         ConsoleLogger::log_success('Temporary directory prepared', 'PrepareTempDirectory');
     }
 
@@ -41,7 +41,7 @@ trait PreparesTempDirectory
     {
         if (file_exists($this->tempPath())) {
             ConsoleLogger::log_warning('Cleaning up temporary directory...', 'PrepareTempDirectory');
-            rrmdir($this->tempPath());
+            rrmdir('"'.$this->tempPath().'"');
         }
         mkdir($this->tempPath());
     }
@@ -53,7 +53,7 @@ trait PreparesTempDirectory
      */
     private function tempPath(): string
     {
-        return '"' . base_path(Constants::AURORA_TEMP_PATH) . '"';
+        return base_path(Constants::AURORA_TEMP_PATH);
     }
 
     /**
@@ -65,13 +65,13 @@ trait PreparesTempDirectory
     {
         if ($this->usePublishedAssets()) {
             ConsoleLogger::log_warning('Using published assets', 'PrepareTempDirectory');
-            rsync('"'.base_path('docker/prod').'"', $this->tempPath() . '/assets');
+            rsync('"'.base_path('docker/prod').'"', '"'.$this->tempPath() . '/assets"');
             return;
         }
 
         ConsoleLogger::log_trace('Copying assets to temporary directory...', 'PrepareTempDirectory');
-        mkdir($this->tempPath() . '/assets');
-        rsync(__DIR__ . '/../../Stubs/docker/prod', $this->tempPath() . '/assets');
+        mkdir('"'.$this->tempPath() . '/assets"');
+        rsync(__DIR__ . '/../../Stubs/docker/prod', '"'.$this->tempPath() . '/assets"');
     }
 
     /**
@@ -92,7 +92,7 @@ trait PreparesTempDirectory
     private function copySource(): void
     {
         ConsoleLogger::log_trace('Copying source code to temporary directory...', 'PrepareTempDirectory');
-        mkdir($this->tempPath() . '/source');
-        rsync_repo_ignore('"'.base_path().'"', $this->tempPath() . '/source');
+        mkdir('"'.$this->tempPath() . '/source"');
+        rsync_repo_ignore('"'.base_path().'"', '"'.$this->tempPath() . '/source"');
     }
 }
